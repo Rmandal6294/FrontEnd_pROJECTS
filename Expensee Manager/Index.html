@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Manager 
+            <a href="about.html" title="About Expense Manager">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </a>
+        </h1>
+        
+
+        <!-- Setup Section -->
+        <div id="setupSection" class="card">
+            <h2>Setup Your Budget</h2>
+            <form id="setupForm">
+                <div class="form-group">
+                    <label for="budgetAmount">Initial Budget Amount ($)</label>
+                    <input type="number" id="budgetAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="daysCount">Number of Days</label>
+                    <input type="number" id="daysCount" required>
+                </div>
+                <div class="form-group">
+                    <label for="dailyLimit">Daily Expense Limit ($)</label>
+                    <input type="number" id="dailyLimit" step="0.01" required>
+                </div>
+                <button type="submit">Start Tracking</button>
+            </form>
+        </div>
+
+        <!-- Main App Section -->
+        <div id="appSection" class="hidden">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Current Balance</div>
+                    <div class="stat-value" id="currentBalance">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Income</div>
+                    <div class="stat-value" id="totalIncome">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Expenses</div>
+                    <div class="stat-value" id="totalExpenses">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Today's Expenses</div>
+                    <div class="stat-value" id="todayExpenses">$0</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="dailyProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-add-money" onclick="openAddMoneyModal()">+ Add Money</button>
+                <button class="btn-add-expense" onclick="openAddExpenseModal()">- Add Expense</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="card">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('all')">All Transactions</button>
+                    <button class="tab" onclick="switchTab('daily')">Daily</button>
+                    <button class="tab" onclick="switchTab('monthly')">Monthly</button>
+                    <button class="tab" onclick="switchTab('yearly')">Yearly</button>
+                </div>
+
+                <!-- All Transactions Tab -->
+                <div id="allTab" class="tab-content">
+                    <div class="expense-list" id="allTransactionsList"></div>
+                </div>
+
+                <!-- Daily Tab -->
+                <div id="dailyTab" class="tab-content hidden">
+                    <div class="filter-section">
+                        <div class="form-group">
+                            <label>Select Date</label>
+                            <input type="date" id="dailyDateFilter" onchange="filterDaily()">
+                        </div>
+                    </div>
+                    <div class="summary-card" id="dailySummary"></div>
+                    <div class="expense-list" id="dailyTransactionsList"></div>
+                </div>
+
+                <!-- Monthly Tab -->
+                <div id="monthlyTab" class="tab-content hidden">
+                    <div class="filter-section">
+                        <div class="form-group">
+                            <label>Select Month</label>
+                            <input type="month" id="monthlyFilter" onchange="filterMonthly()">
+                        </div>
+                    </div>
+                    <div class="summary-card" id="monthlySummary"></div>
+                    <div class="expense-list" id="monthlyTransactionsList"></div>
+                </div>
+
+                <!-- Yearly Tab -->
+                <div id="yearlyTab" class="tab-content hidden">
+                    <div class="filter-section">
+                        <div class="form-group">
+                            <label>Select Year</label>
+                            <select id="yearlyFilter" onchange="filterYearly()"></select>
+                        </div>
+                    </div>
+                    <div class="summary-card" id="yearlySummary"></div>
+                    <div class="monthly-summary" id="yearlyMonthlySummary"></div>
+                    <div class="expense-list" id="yearlyTransactionsList"></div>
+                </div>
+            </div>
+
+            <button id="resetBtn" class="btn-cancel" style="margin-top: 20px;">Reset All Data</button>
+        </div>
+    </div>
+
+    <!-- Add Money Modal -->
+    <div id="addMoneyModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #28a745;">💵 Add Money</h2>
+            <div class="form-group">
+                <label for="moneyAmount">Amount ($)</label>
+                <input type="number" id="moneyAmount" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="moneyNote">Note</label>
+                <input type="text" id="moneyNote" placeholder="Source of income">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal('addMoneyModal')">Cancel</button>
+                <button class="btn-add-money" onclick="addMoney()">Add Money</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Expense Modal -->
+    <div id="addExpenseModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #dc3545;">💸 Add Expense</h2>
+            <div class="form-group">
+                <label for="expenseAmount">Amount ($)</label>
+                <input type="number" id="expenseAmount" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="expenseNote">Note</label>
+                <input type="text" id="expenseNote" placeholder="What did you spend on?">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal('addExpenseModal')">Cancel</button>
+                <button class="btn-add-expense" onclick="addExpense()">Add Expense</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <div style="text-align: center; font-size: 3rem; margin-bottom: 15px;">⚠️</div>
+            <h2 style="text-align: center; color: #ff6b6b;">Daily Limit Exceeded!</h2>
+            <p style="text-align: center; margin: 15px 0;">
+                Adding this expense will exceed your daily limit of <span id="limitAmount"></span>. 
+                Do you want to proceed?
+            </p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal('alertModal')">Cancel</button>
+                <button onclick="confirmAddExpense()">Add Anyway</button>
+            </div>
+        </div>
+    </div>
+
+    <script src ="script.js"> </script>
+</body>
+</html>
