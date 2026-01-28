@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Awareness & Attack Simulator</title>
+    <link rel="stylesheet" href="styleSheet.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🛡️</div>
+                    <h1>CyberSec Awareness & Attack Simulator</h1>
+                </div>
+                <div class="score-badge">
+                    <span>Awareness Score:</span>
+                    <span class="score-value" id="totalScore">0</span>
+                    <span>/100</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <button class="tab-btn active" onclick="showTab('phishing')">📧 Phishing Simulator</button>
+            <button class="tab-btn" onclick="showTab('password')">🔐 Password Analyzer</button>
+            <button class="tab-btn" onclick="showTab('bruteforce')">⚡ Brute Force Demo</button>
+            <button class="tab-btn" onclick="showTab('xss')">🔥 XSS Demo</button>
+            <button class="tab-btn" onclick="showTab('sql')">💉 SQL Injection Demo</button>
+        </nav>
+
+        <!-- Phishing Simulator -->
+        <div id="phishing" class="content-section active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📧</div>
+                    <h2>Phishing Email Simulator</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select Email Scenario:</label>
+                    <select id="emailScenario" onchange="loadPhishingEmail()">
+                        <option value="bank">Fake Banking Alert</option>
+                        <option value="prize">Prize Winner Scam</option>
+                        <option value="security">Security Alert Phishing</option>
+                        <option value="delivery">Fake Delivery Notification</option>
+                    </select>
+                </div>
+
+                <div class="email-preview" id="emailPreview">
+                    <!-- Email content will be loaded here -->
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn" onclick="analyzePhishingEmail()">🔍 Analyze Email</button>
+                    <button class="btn btn-secondary" onclick="loadPhishingEmail()">🔄 Load New Email</button>
+                </div>
+
+                <div id="phishingResult"></div>
+            </div>
+        </div>
+
+        <!-- Password Analyzer -->
+        <div id="password" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔐</div>
+                    <h2>Password Strength Analyzer</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Password to Analyze:</label>
+                    <input type="password" id="passwordInput" placeholder="Enter your password" oninput="analyzePassword()">
+                </div>
+
+                <div class="strength-meter">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+
+                <div id="strengthText" style="margin-top: 10px; font-weight: 600;"></div>
+
+                <div class="strength-info" id="passwordChecks"></div>
+
+                <div id="passwordResult"></div>
+            </div>
+
+            <div class="card">
+                <h3>Password Security Tips</h3>
+                <div class="vuln-item">
+                    <div class="vuln-title">✓ Use at least 12 characters</div>
+                    <div class="vuln-description">Longer passwords are exponentially harder to crack</div>
+                </div>
+                <div class="vuln-item">
+                    <div class="vuln-title">✓ Mix character types</div>
+                    <div class="vuln-description">Combine uppercase, lowercase, numbers, and special characters</div>
+                </div>
+                <div class="vuln-item">
+                    <div class="vuln-title">✓ Avoid personal information</div>
+                    <div class="vuln-description">Don't use names, birthdays, or common words</div>
+                </div>
+                <div class="vuln-item">
+                    <div class="vuln-title">✓ Use unique passwords</div>
+                    <div class="vuln-description">Never reuse passwords across different accounts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brute Force Demo -->
+        <div id="bruteforce" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <h2>Brute Force Attack Demonstration</h2>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    This simulation demonstrates how brute force attacks work by trying multiple password combinations.
+                    <span class="tooltip" data-tooltip="This is a safe simulation">ℹ️</span>
+                </p>
+
+                <div class="form-group">
+                    <label>Target Password (for simulation):</label>
+                    <input type="text" id="bruteTarget" placeholder="e.g., abc123" value="pass">
+                </div>
+
+                <div class="form-group">
+                    <label>Attack Speed:</label>
+                    <select id="bruteSpeed">
+                        <option value="100">Slow (100ms delay)</option>
+                        <option value="50" selected>Medium (50ms delay)</option>
+                        <option value="10">Fast (10ms delay)</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="startBruteForce()" id="bruteBtn">⚡ Start Attack Simulation</button>
+
+                <div class="progress-bar" style="display: none;" id="bruteProgress">
+                    <div class="progress-fill" id="bruteProgressFill">0%</div>
+                </div>
+
+                <div class="demo-console" id="bruteConsole"></div>
+            </div>
+        </div>
+
+        <!-- XSS Demo -->
+        <div id="xss" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔥</div>
+                    <h2>Cross-Site Scripting (XSS) Demo</h2>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    XSS attacks inject malicious scripts into web pages. This is a safe demonstration of how input validation prevents such attacks.
+                </p>
+
+                <div class="form-group">
+                    <label>Enter User Input (try entering &lt;script&gt;alert('XSS')&lt;/script&gt;):</label>
+                    <textarea id="xssInput" placeholder="Type something..."></textarea>
+                </div>
+
+                <button class="btn" onclick="testXSS()">🔍 Test Input</button>
+
+                <div id="xssResult"></div>
+
+                <div class="card" style="margin-top: 25px; background: var(--secondary-bg);">
+                    <h3>How XSS Works:</h3>
+                    <div class="vuln-item">
+                        <div class="vuln-title">1. Injection</div>
+                        <div class="vuln-description">Attacker inputs malicious script in form fields</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">2. Storage/Reflection</div>
+                        <div class="vuln-description">Script is stored in database or reflected in response</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">3. Execution</div>
+                        <div class="vuln-description">Script runs in victim's browser when page loads</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">4. Prevention</div>
+                        <div class="vuln-description">Sanitize input, escape output, use Content Security Policy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SQL Injection Demo -->
+        <div id="sql" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💉</div>
+                    <h2>SQL Injection Demo</h2>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    SQL injection exploits vulnerable database queries. This safe simulation shows how proper validation prevents attacks.
+                </p>
+
+                <div class="form-group">
+                    <label>Username (try entering: admin' OR '1'='1):</label>
+                    <input type="text" id="sqlUsername" placeholder="Enter username">
+                </div>
+
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="sqlPassword" placeholder="Enter password">
+                </div>
+
+                <button class="btn" onclick="testSQLInjection()">🔍 Test Login</button>
+
+                <div class="demo-console" id="sqlConsole"></div>
+
+                <div id="sqlResult"></div>
+
+                <div class="card" style="margin-top: 25px; background: var(--secondary-bg);">
+                    <h3>SQL Injection Prevention:</h3>
+                    <div class="vuln-item">
+                        <div class="vuln-title">✓ Prepared Statements</div>
+                        <div class="vuln-description">Use parameterized queries instead of string concatenation</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">✓ Input Validation</div>
+                        <div class="vuln-description">Validate and sanitize all user inputs</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">✓ Least Privilege</div>
+                        <div class="vuln-description">Database users should have minimal necessary permissions</div>
+                    </div>
+                    <div class="vuln-item">
+                        <div class="vuln-title">✓ Error Handling</div>
+                        <div class="vuln-description">Don't expose database errors to users</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🛡️ CyberSec Awareness Platform | Educational Purpose Only</p>
+        <p style="margin-top: 10px; font-size: 14px;">Learn to identify and prevent common cyber threats</p>
+    </footer>
+
+    <script src = "ScriptCode.js">
+       
+    </script>
+</body>
+</html>
