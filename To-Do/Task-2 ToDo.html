@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> To Do List </title>
+    <link rel="stylesheet" href="styles_ts2.css">
+</head>
+<body>
+    <header>
+        <div class = "headerDiv">
+            <h2>CodeAlpha — Task 02</h2>
+            <h1> Project- ToDo List </h1>
+            <p id = "showDate"> month day, year</p>
+        </div>
+
+        <p class="headerLine"> Track your Daily Task & Boost Productivity </p>
+    </header>
+
+    <main>
+        <div class = "addTaskContainer"> 
+            <div id = "addTaskFields">
+                <p class = "addHeadline"> Add New Task </p>
+            
+                <div class="Input_field">
+                    <label for="taskTitle">Task Title</label><br>
+                    <input id="taskTitle" type="text"  placeholder="Enter Task Title" min="2" title="Enter your Task"/>
+                </div>
+
+                <div class="Input_field">
+                    <label for="timeField">Date & Time</label><br>
+                    <input id="timeField" type = "datetime-local" />
+                </div>
+
+                <button class="addTask" onclick="addTask()"> Add Task </button>
+            </div>
+        </div>
+
+        <div class = "TaskContainer">
+            <p class = "addHeadline"> Show Tasks </p>
+
+            <div class = "SearchTask">
+                <p class = "searchIcon">🔎</p>
+                <input id="searchListedTask" placeholder="Search Your task"/>
+                <p class = "search_find">➡️</p>
+            </div>
+
+            <div class = "taskBox">
+                <div class = "first">
+                    <p id = "taskName"> Task Name </p>
+                    <p id = "taskDateTime"> 28 / 03 / 2026 At 11:34</p><br>
+                </div>
+
+                <div class = "second">
+                    <button class="markTask" onclick="markTask()"> ✅/⭕ </button>
+                    <button class="editTask" onclick="editTask()"> ✒️ </button>
+                    <button class="deleteTask" onclick="deleteTask()"> ❌ </button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class = "taskHistoryContainer">
+            <p class = "addHeadline"> Task History </p>
+
+            <div class = "SearchTask">
+                <p class = "searchIcon">🔎</p>
+                <input id="searchHistory" placeholder="Search Your task"/>
+                <p class = "search_find">➡️</p>
+            </div>
+
+            <div class = "pastTaskS">
+                <p id = "task_name"> Task Name </p>
+                <p id = "task_DateTime"> 28 / 03 / 2026 At 11:34</p>
+                <p id = "task_status"> ⭕/✅</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer">© 2026 CodeAlpha — Todo List Project</p>
+    </footer>
+
+    <script src = "scripts_ts2.js"></script>
+</body>
+</html>
