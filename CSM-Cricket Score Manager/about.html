@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>About CSM | Cricket Score Manager</title>
+    <link rel="icon" type="image/x-icon" href="img.jpg">
+    <style>
+        :root {
+            --primary-color: #f97316;
+            --secondary-color: #3d9f69;
+            --accent-color: #d8e9a8;
+            --dark-color: #191a19;
+            --light-color: #f7f7f7;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        #header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        #h-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        header h1 a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        header h1 a:hover {
+            color: var(--accent-color);
+        }
+        
+        #ab_se{
+            width: 200px;
+            height: 50px;
+            background-color: #d8e9a8;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 20px 30px 40px 50px ;
+            box-shadow: 2px 2px 20px gold;
+            transition: 0.7s;
+        }
+        
+        #ab_se:hover{
+            width: 210px;
+            box-shadow: 2.5px 2.5px 20.5px rgb(17, 17, 16);
+        
+        }
+
+        #ab_se a{
+            text-decoration: none;
+            font: bold;
+            font-size: larger;
+            color: #191a19;
+        }
+        
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .about-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-section {
+            margin-bottom: 4rem;
+        }
+        
+        .about-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .team-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .developer-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .developer-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .dev-img {
+            width: 300px;
+            height: auto !important;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            border: 5px solid var(--primary-color);
+            border-radius: 50px 100px 70px 140px;
+            margin-top: 30px;
+        }
+        
+        .developer-card:hover .dev-img {
+            transform: scale(1.05);
+        }
+        
+        .dev-info {
+            padding: 1.5rem;
+        }
+        
+        .dev-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .dev-role {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .dev-info p {
+            font-size: 1.2rem;
+            color :#666;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .contact-section {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+        
+        .tools-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .tool-badge {
+            background-color: #f0f0f0;
+            color: var(--dark-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-badge:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .tool-badge i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        
+        .timeline-container.left {
+            left: 0;
+        }
+        
+        .timeline-container.right {
+            left: 50%;
+        }
+        
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--light-color);
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-container.right::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .timeline-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .cta-btn.secondary {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        
+        .testimonials {
+            margin-top: 4rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: "";
+            font-size: 5rem;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            color: rgba(249, 115, 22, 0.2);
+            font-family: serif;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .version-info {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-container.right {
+                left: 0;
+            }
+            
+            .timeline-container.left::after, 
+            .timeline-container.right::after {
+                left: 18px;
+            }
+              
+        .dev-img {
+            width: 100%;
+            height: auto !important;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div id="header">
+            <img id="h-img" src="img.jpg" alt="logo">
+            <h1><a href="index.html">CSM (CRICKET SCORE MANAGER)</a></h1>
+        </div>
+        <div id="ab_se">
+            <a href="index.html">Home</a>
+        </div>
+    </header>
+
+    <div class="about-hero">
+        <h1>Cricket Score Manager</h1>
+        <p>A modern, intuitive cricket scoring solution designed for clubs, schools, and cricket enthusiasts.</p>
+    </div>
+
+    <main>
+        <div class="about-container">
+            <div class="about-grid">
+                <div class="about-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Comprehensive Scoring</h3>
+                    <p>Track every run, wicket, and over with precision. CSM handles all the complexities of cricket scoring so you can focus on the game.</p>
+                </div>
+                
+                <div class="about-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Team Management</h3>
+                    <p>Create and manage custom teams with detailed player profiles, roles, and statistics that persist across matches.</p>
+                </div>
+                
+                <div class="about-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Responsive</h3>
+                    <p>Score matches from anywhere using any device. CSM works seamlessly on desktops, tablets, and smartphones.</p>
+                </div>
+                
+                <div class="about-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>No Installation Required</h3>
+                    <p>Access CSM directly from your browser without downloading or installing any software. Start scoring in seconds.</p>
+                </div>
+            </div>
+            
+            <div class="about-section">
+            
+            <div class="about-section">
+                <h2>Core Features</h2>
+                <ul class="feature-list">
+                    <li><strong>Team Management:</strong> Create and customize teams with detailed player profiles including names, jersey numbers, and specialized roles.</li>
+                    <li><strong>Authentic Toss Simulation:</strong> Start your match with a realistic toss that determines which team bats or bowls first.</li>
+                    <li><strong>Real-time Scoring:</strong> Record runs, wickets, extras, and other events with a simple, intuitive interface that updates instantly.</li>
+                    <li><strong>In-depth Statistics:</strong> Track run rates, boundaries, partnerships, and other critical metrics automatically.</li>
+                    <li><strong>Ball-by-Ball Analysis:</strong> Review every delivery with detailed ball-by-ball breakdowns and commentary.</li>
+                    <li><strong>Multi-device Support:</strong> Score matches from any device with a responsive design that adapts to your screen size.</li>
+                </ul>
+            </div>
+            
+            <div class="about-section">
+                <h2>Development Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <span class="timeline-date">Dec 2024</span>
+                            <h3>Project Inception</h3>
+                            <p>The idea for CSM was born during a local cricket tournament where scoring challenges highlighted the need for a better solution.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <span class="timeline-date">January 2025</span>
+                            <h3>Prototype Development</h3>
+                            <p>First working prototype developed with basic scoring functionality and team management.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <span class="timeline-date">Feb 2025</span>
+                            <h3>Manually Testing</h3>
+                            <p>Project goes cricket clubs for hand to hand testing and feedback.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <span class="timeline-date">March 2024</span>
+                            <h3>Official Launch</h3>
+                            <p>CSM  officially launched with comprehensive scoring features and mobile support.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <h2>Technologies Powering CSM</h2>
+                <p>Cricket Score Manager leverages modern web technologies to deliver a fast, reliable, and user-friendly experience:</p>
+                <div class="tools-section">
+                    <div class="tool-badge"><i class="fab fa-html5"></i> HTML5</div>
+                    <div class="tool-badge"><i class="fab fa-css3-alt"></i> CSS3</div>
+                    <div class="tool-badge"><i class="fab fa-js"></i> JavaScript</div>
+                    <div class="tool-badge"><i class="fas fa-database"></i> LocalStorage API</div>
+                    <div class="tool-badge"><i class="fas fa-mobile-alt"></i> Responsive Design</div>
+                    <div class="tool-badge"><i class="fas fa-font"></i> Google Fonts</div>
+                    <div class="tool-badge"><i class="fab fa-font-awesome"></i> Font Awesome</div>
+                </div>
+            </div>
+            
+            <div class="about-section testimonials">
+                <h2>What Users Are Saying</h2>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>CSM has completely transformed how we manage our school cricket matches. The interface is intuitive enough for students to use, while providing all the detailed statistics our coaches need. It's become an essential tool for our cricket program.</p>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>As a small cricket club, we couldn't afford expensive scoring systems. CSM gives us professional-level features completely free. Our spectators love following the live scores and our players appreciate the detailed stats they get after each match.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <h2>Future Roadmap</h2>
+                <p>We're committed to continuously improving CSM based on user feedback and cricket's evolving needs. Here's what's coming next:</p>
+                <ul class="feature-list">
+                    <li><strong>Tournament Management:</strong> Create and manage multi-match tournaments with automated scheduling and standings.</li>
+                    <li><strong>Advanced Analytics:</strong> Deeper statistical analysis with visual charts and performance insights.</li>
+                    <li><strong>Cloud Synchronization:</strong> Seamlessly sync match data across devices with secure cloud storage.</li>
+                    <li><strong>Offline Mode:</strong> Continue scoring even without internet connectivity, with automatic syncing when reconnected.</li>
+                    <li><strong>Live Streaming Integration:</strong> Connect CSM to video streams for complete match coverage.</li>
+                    <li><strong>API Access:</strong> Enable developers to build custom applications using CSM data.</li>
+                </ul>
+            </div>
+            
+            <div class="cta-section">
+                <h2>Join me</h2>
+                <p>Become part of a growing community of cricket enthusiasts who are revolutionizing how the game is scored and analyzed. Whether you're a player, coach, club administrator, or fan, CSM has features designed specifically for you.</p>
+                <div class="developer-card">
+                    <div class="dev-img-container">
+                        <img src="my_pic.jpg" alt="Developer" class="dev-img">
+                    </div>
+                    <div class="dev-info">
+                        <h3>Ranit Mandal</h3>
+                        <span class="dev-role">Developer</span>
+                        <p>A web developer with front-end experties and a lifelong cricket enthusiast.</p>
+                        <div class="contact-section">
+                            <a href="https://github.com/Rmandal6294" class="social-icon" target="_blank" rel="noopener" title = "github"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/ranit-m-04a73326b" target="_blank" rel="noopener" title="linkedin"class="social-icon"><i class="fab fa-linkedin"></i></a>
+                            ><a href="https://www.instagram.com/ranit.mmm" target="_blank" rel="noopener" title = "instagram" class = "social-icon"><i class="fab fa-instagram"></i></a></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="index.html" class="cta-btn">Start Scoring Now</a>
+                    <a href="https://github.com/Rmandal6294/CSM-Cricket-Score-Manager-" class="cta-btn secondary">Source Code</a>
+                </div>
+            </div>
+            
+            <div class="version-info">
+                <p>Cricket Score Manager v1.2.0 | Last Updated: March 2025</p>
+                <p>© 2025 Cricket Score Manager. All rights reserved.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

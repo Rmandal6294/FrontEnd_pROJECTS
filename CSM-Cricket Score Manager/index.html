@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title> CSM </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="img.jpg">
+</head>
+<body>
+    
+    <header>
+        <div id = "header">
+            <img id = "h-img" src = "img.jpg" alt = "logo">
+            <h1> <a href="#"> CSM (CRICKET  SCORE MANAGER) </a> </h1>
+        </div>
+        <div id ="ab_se">
+            <a href="about.html" id = "about_section">About</a>
+        </div>
+    </header>
+
+
+    <main>
+
+        <div class="main">
+
+            <div class="Team_container">
+                <h1>Select Team</h1>
+    
+                <div class="input-container">
+                    <h3>Fill the team name and start!</h3>
+                    <div class="team-input">
+                        <div class="input-group">
+                            <label for="team1">Team 1 Name:</label>
+                            <input type="text" id="team1">
+                        </div>
+                        <div class="input-group">
+                            <label for="team2">Team 2 Name:</label>
+                            <input type="text" id="team2">
+                        </div>
+                    </div>
+                    <button onclick="startGame()">Start Game</button>
+                </div>  
+            </div>
+            
+            <div class="Player_container"> <!--! ----------------------->
+                <h1> Manage The Player </h1>
+                <div id = "team_1">
+                    <h3 id = "team1Name"> Team A </h3>
+
+                    <form id="player-management-form">
+                        <input type="text" id="player-name1" placeholder="Player Name" required />
+
+                        <input type = "number" id = "player1-jsno" placeholder="Enter Jersey No." required />
+
+                        <select id="role-category1" required title="Role Category">
+                            <option value="" disabled selected>Select Category</option>
+                            <option value="Bowler"> Bowler </option>
+                            <option value="Batsman"> Batsman </option>
+                            <option value="Wicketkeeper"> Wicketkeeper </option>
+                            <option value="All-rounder"> All-rounder </option>
+                        </select>
+
+                        <button type="submit" id = "add_team_a_player">Add Player</button>
+                    </form>
+
+                    <div class="player-table">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>No.</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="player-list1"></tbody>
+                        </table>
+                    </div>
+                </div> 
+
+                <div id = "team_2">
+                    <h3 id = "team2Name"> Team B </h3>
+
+                    <form id="player-management-form">
+                        <input type="text" id="player-name2" placeholder="Player Name" required />
+
+                        <input type = "number" id = "player2-jsno" placeholder="Enter Jersey No." required />
+
+                        <select id="role-category2" required title="Role Category">
+                            <option value="" disabled selected>Select Category</option>
+                            <option value="Bowler"> Bowler </option>
+                            <option value="Batsman"> Batsman </option>
+                            <option value="Wicketkeeper"> Wicketkeeper </option>
+                            <option value="All-rounder"> All-rounder </option>
+                        </select>
+
+                        <button type="submit" id = "add_team_b_player">Add Player</button>
+                    </form>
+
+                    <div class="player-table">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>No.</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="player-list2"></tbody>
+                        </table>
+                    </div>
+                </div> 
+                <button onclick = "finish_player_management()" id="finish"> Finish </button>
+            </div>
+
+            <div class="score-container" id="score-container"><!--! ----------------------->
+                <div class="score-board">
+                    <div id = "Toss-System">
+                        <h1>Toss</h1>
+                        <div id = "Team_Name_set">
+                            <h2 id = "team1name">Team A</h2>
+                            <h2 id = "team2name">Team B</h2>
+                            <button onclick="toss()">Toss</button>
+                        </div>
+                        <div id = "toss-result">
+                            <h2 id="result"></h2>
+                            <div id = "choose_option">
+                                <h3> Choose: First</h3>
+                                <button onclick="Batting()"> Batting </button>
+                                <button onclick="Bowling()">Bowling</button>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class = "score_Count">
+                        <h2> 
+                            <span id = "team1nam" > </span>
+                            <span> Total Score/ </span> 
+                            <span id="team1Score"> 0 </span>
+                        </h2>
+                        <h2>
+                            <span id = "team2nam"> </span>
+                            <span> Total Score/ </span> 
+                            <span id="team2Score">0</span>
+                        </h2>
+                    </div>
+                </div>
+        
+                <div class="scoreboard">
+                    <h2>Cricket Score Management</h2>
+            
+                    <div class="info">
+                        <span>Current Batsmen:</span> <span id="batsmen">Player A1, Player A2</span>
+                    </div>
+                    <div class="info" id ="blo">
+                        <span>Current Bowler:</span> <span id="bowler">Player B11</span>
+                    </div>
+                    <div class="info">
+                        <span>Total Runs:</span> <span id="totalRuns">0</span>
+                    </div>
+                    <div class="info">
+                        <span>Wickets:</span> <span id="wickets">0</span>
+                    </div>
+                    <div class="info">
+                        <span>Overs:</span> <span id="overs">0</span>
+                    </div>
+                    <div class="info">
+                        <span>Run Rate:</span> <span id="runRate">0.00</span>
+                    </div>
+                    <div class="info">
+                        <span>Fours:</span> <span id="fours">0</span>
+                    </div>
+                    <div class="info">
+                        <span>Sixes:</span> <span id="sixes">0</span>
+                    </div>
+            
+                    <div class="controls">
+                        <h3>Enter Ball Outcome</h3>
+                        <input type="number" id="runs" placeholder="Runs" min="0" max="6">
+                        <label><input type="checkbox" id="wicket"> Wicket</label>
+                        <label><input type="checkbox" id="whiteBall"> White Ball</label>
+                        <br>
+                        <button onclick="recordBall()">Record Ball</button>
+                        <button onclick="exitGame()"> Exit Game</button>
+                    </div>
+                </div>
+        
+                <div id = "Score_Analysis"> </div>
+            </div>
+
+            <div id="winner-container"> 
+                <div class="winner-content">
+                    <h2 id="winnerMessage">Congratulations!</h2>
+                    <p id="winDetails">Team scored 0 runs, while Tea, scored 0 runs.</p>
+                    <button onclick="restartGame()">Restart Game</button>
+                    <button onclick="exitGame()"> Exit Game</button>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+
+    <footer>
+        <p></p>
+    </footer>
+
+    <script src = "Scripts.js"></script>
+</body>
+</html>
