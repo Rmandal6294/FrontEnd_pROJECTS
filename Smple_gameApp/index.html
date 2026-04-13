@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="LOGO.png" type="image/png">
+    <title>My Games Home</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e2f;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5em;
+            text-align: center;
+            color: #ff6347;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2em;
+            color: #b0b0b5;
+        }
+
+        /* Header - Title Bar */
+        header {
+            background-color: #282a36;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        img{
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border-radius: 60%;
+            border: 2px solid rgb(222, 215, 176);
+            transition: 1s;
+        }
+
+        img:hover{
+            border: 2px dotted rgb(220, 181, 181);
+            width: 105px;
+            height: 105px;
+            box-shadow: 2px 3px 40px rgb(170, 161, 161);
+            margin: 10px;
+        }
+
+            /* Navbar Styles */
+    nav {
+        background: #282a36;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+      }
+  
+      nav .logo {
+        font-size: 1.5rem;
+        color: #00d4ff;
+        font-weight: bold;
+        text-decoration: none;
+      }
+  
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+  
+      nav ul li a {
+        text-decoration: none;
+        color: #e8e8e8;
+        font-size: 1rem;
+        transition: color 0.3s;
+      }
+  
+      nav ul li a:hover {
+        color: #ff003c;
+        background-color: black;
+        padding: 10px;
+        border-radius: 20px;
+      }
+
+      .menu-toggle{
+        display: none;
+      }
+  
+      /* Mobile-friendly Navbar */
+      @media (max-width: 768px) {
+        nav ul {
+          flex-direction: column;
+          display: none;
+          background: #282a36;
+          position: absolute;
+          top: 60px;
+          right: 20px;
+          width: 150px;
+          border-radius: 8px;
+          padding: 10px 0;
+        }
+  
+        nav ul.show {
+          display: flex;
+        }
+         
+        .menu-toggle {
+          font-size: 1.5rem;
+          color: #ec1769;
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: block;
+        }
+      }
+
+        /* Game Container */
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 100px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        .game-card {
+            background: #282a36;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card h3 {
+            font-size: 1.5em;
+            color: #ff6347;
+        }
+
+        .game-card p {
+            font-size: 1em;
+            color: #b0b0b5;
+            margin: 10px 0;
+        }
+
+        .game-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #ff6347;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .game-card a:hover {
+            background-color: #e5533f;
+        }
+
+        /* Typing Effect */
+        #typing-effect {
+            
+            font-size: 2.5em;
+            color: #ff6347;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 200px;
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+            box-sizing: border-box;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #282a36;
+            padding: 10px 20px;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer p {
+            color: #b0b0b5;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Logo, Company Name, and Navigation -->
+    <header>
+        <img src="LOGO.png" class="img-responsive" alt="Company_logo" />
+        <nav>
+            <!-- <a href="#" class="logo">RANIT'S GAMES</a> -->
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+          </nav>
+        <!-- <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav> -->
+    </header>
+
+    <!-- Typing Effect -->
+    <div id="typing-effect"></div>
+
+    <!-- Game Cards -->
+    <div class="game-container">
+        <!-- Simon Says Card -->
+        <div class="game-card">
+            <h3>Simon Says</h3>
+            <p>Test your memory with the classic game!</p>
+            <a href="SimonSays.html">Play Now</a>
+        </div>
+
+        <!-- Maza Game Card -->
+        <div class="game-card">
+            <h3>Maza Game</h3>
+            <p>Test your memory with the classic game!</p>
+            <a href="Mazegame.html">Play Now</a>
+        </div>
+
+        <!-- Hangman Card -->
+        <div class="game-card">
+            <h3>Hangman</h3>
+            <p>Guess the hidden word before it's too late.</p>
+            <a href="LetterGuessing.html">Play Now</a>
+        </div>
+
+        <!-- Catch Game Card -->
+        <div class="game-card">
+            <h3>Catch Game</h3>
+            <p>Catch the falling objects and score points!</p>
+            <a href="catch.html">Play Now</a>
+        </div>
+
+        <!-- Color Matching Game Card -->
+        <div class="game-card">
+            <h3>Color Matching</h3>
+            <p>Match the colors as fast as you can.</p>
+            <a href="colormatching.html">Play Now</a>
+        </div>
+
+        <!-- Typing Speed Test Card -->
+        <div class="game-card">
+            <h3>Typing Speed Test</h3>
+            <p>How fast can you type? Test your speed now!</p>
+            <a href="typingtest.html">Play Now</a>
+        </div>
+    </div>
+
+    <!-- Footer with Copyright -->
+    <footer>
+        <p>&copy; 2024 RANIT'S GAMES || All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Typing effect function
+        const typingEffectElement = document.getElementById("typing-effect");
+        const text = "Welcome to RANIT'S GAMES...";
+        let i = 0;
+
+        function typeText() {
+            if (i < text.length) {
+                typingEffectElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeText, 100);
+            }
+        }
+            
+        typeText();
+
+         // Toggle mobile menu
+    function toggleMenu() {
+        document.querySelector('nav ul').classList.toggle('show');
+      }
+    </script>
+
+</body>
+</html>

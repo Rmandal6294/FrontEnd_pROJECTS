@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <title>Maze Game</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e1e2f, #282a36);
+      color: #fff;
+    }
+
+    /* Title Bar */
+    .title-bar {
+      background-color: #ff6347;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .title-bar h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .title-bar nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    .title-bar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .title-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Maze Container */
+    #maze-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .cell {
+      width: 100%;
+      padding-top: 100%; /* Makes cells responsive squares */
+      position: relative;
+      border-radius: 5px;
+      background-color: #3c3f58;
+    }
+
+    .cell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .wall::after {
+      background-color: #333;
+    }
+
+    .start::after {
+      background-color: #28a745;
+    }
+
+    .end::after {
+      background-color: #dc3545;
+    }
+
+    .player::after {
+      background-color: #007bff;
+    }
+
+    /* Status and Controls */
+    #status {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    #restart-btn {
+      display: none;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #ff6347;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #restart-btn:hover {
+      background-color: #e5533f;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      #maze-container {
+        gap: 3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title-bar">
+    <h1>Maze Game</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <p style="text-align: center; margin: 20px;">Use the arrow keys to move the blue square to the red square!</p>
+
+  <div id="maze-container"></div>
+  <div id="status"></div>
+  <button id="restart-btn">Restart Game</button>
+
+  <script>
+    let mazeLayout = [
+      ["S", "", "", "W", "", "", "", "", "", ""],
+      ["W", "W", "", "W", "", "W", "W", "", "W", ""],
+      ["", "", "", "", "", "", "", "", "", ""],
+      ["", "W", "W", "W", "W", "", "W", "W", "W", ""],
+      ["", "", "", "", "", "", "", "", "", ""],
+      ["", "W", "W", "", "W", "W", "", "W", "W", ""],
+      ["", "", "", "", "", "", "", "", "", ""],
+      ["W", "W", "", "W", "W", "", "W", "W", "W", ""],
+      ["", "", "", "", "", "", "", "", "", ""],
+      ["", "W", "", "", "", "", "", "W", "", "E"],
+    ];
+
+    const mazeContainer = document.getElementById("maze-container");
+    const statusDisplay = document.getElementById("status");
+    const restartButton = document.getElementById("restart-btn");
+
+    let playerPosition = { x: 0, y: 0 };
+
+    // Render the maze
+    function renderMaze() {
+      mazeContainer.innerHTML = "";
+      for (let row = 0; row < mazeLayout.length; row++) {
+        for (let col = 0; col < mazeLayout[row].length; col++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          if (mazeLayout[row][col] === "W") {
+            cell.classList.add("wall");
+          } else if (mazeLayout[row][col] === "S") {
+            cell.classList.add("start");
+          } else if (mazeLayout[row][col] === "E") {
+            cell.classList.add("end");
+          }
+
+          if (playerPosition.x === col && playerPosition.y === row) {
+            cell.classList.add("player");
+          }
+
+          mazeContainer.appendChild(cell);
+        }
+      }
+    }
+
+    // Handle player movement
+    function movePlayer(direction) {
+      const { x, y } = playerPosition;
+      let newX = x;
+      let newY = y;
+
+      if (direction === "up") newY--;
+      else if (direction === "down") newY++;
+      else if (direction === "left") newX--;
+      else if (direction === "right") newX++;
+
+      if (
+        newY >= 0 &&
+        newY < mazeLayout.length &&
+        newX >= 0 &&
+        newX < mazeLayout[0].length &&
+        mazeLayout[newY][newX] !== "W"
+      ) {
+        playerPosition = { x: newX, y: newY };
+
+        if (mazeLayout[newY][newX] === "E") {
+          statusDisplay.textContent = "Congratulations! You reached the end!";
+          restartButton.style.display = "block";
+          return;
+        }
+      }
+
+      renderMaze();
+    }
+
+    // Restart the game
+    function restartGame() {
+      playerPosition = { x: 0, y: 0 };
+      statusDisplay.textContent = "";
+      restartButton.style.display = "none";
+      renderMaze();
+    }
+
+    // Listen for arrow key presses
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowUp") movePlayer("up");
+      else if (event.key === "ArrowDown") movePlayer("down");
+      else if (event.key === "ArrowLeft") movePlayer("left");
+      else if (event.key === "ArrowRight") movePlayer("right");
+    });
+
+    restartButton.addEventListener("click", restartGame);
+
+    renderMaze();
+  </script>
+</body>
+</html>

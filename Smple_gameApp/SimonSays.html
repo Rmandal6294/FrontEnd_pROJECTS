@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <title>Simon Says Game</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e1e2f, #282a36);
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Title Bar */
+    header {
+      width: 100%;
+      padding: 15px;
+      background: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      color: #ff6347;
+      font-size: 1.8em;
+      margin: 0;
+    }
+
+    /* Game Environment */
+    #game-container {
+      margin-top: 80px; /* Offset for fixed header */
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    /* Game Board */
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(2, 120px);
+      grid-gap: 15px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .color-tile {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .color-tile.active {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    #controls {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #ff6347;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #e5533f;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      #game-board {
+        grid-template-columns: repeat(2, 90px);
+        grid-gap: 10px;
+      }
+
+      .color-tile {
+        width: 90px;
+        height: 90px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Simon Says</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div id="game-container">
+    <h1>Simon Says</h1>
+    
+    <div id="game-board">
+      <div class="color-tile" id="tile1" style="background-color: red;"></div>
+      <div class="color-tile" id="tile2" style="background-color: green;"></div>
+      <div class="color-tile" id="tile3" style="background-color: blue;"></div>
+      <div class="color-tile" id="tile4" style="background-color: yellow;"></div>
+    </div>
+    <div id="controls">
+      <button id="start-btn">Start Game</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    const tiles = document.querySelectorAll('.color-tile');
+    const startButton = document.getElementById('start-btn');
+    const statusDisplay = document.getElementById('status');
+
+    let sequence = [];
+    let playerSequence = [];
+    let level = 0;
+
+    // Flash a tile
+    const flashTile = (tile) => {
+      tile.classList.add('active');
+      setTimeout(() => tile.classList.remove('active'), 500);
+    };
+
+    // Play the sequence
+    const playSequence = async () => {
+      for (let i = 0; i < sequence.length; i++) {
+        const tile = document.getElementById(`tile${sequence[i]}`);
+        await new Promise((resolve) => setTimeout(() => {
+          flashTile(tile);
+          resolve();
+        }, 800));
+      }
+    };
+
+    // Start a new round
+    const nextRound = () => {
+      playerSequence = [];
+      level++;
+      statusDisplay.textContent = `Level ${level}`;
+      sequence.push(Math.floor(Math.random() * 4) + 1);
+      playSequence();
+    };
+
+    // Check player's input
+    const checkInput = (tileId) => {
+      playerSequence.push(tileId);
+      const currentIndex = playerSequence.length - 1;
+
+      if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+        statusDisplay.textContent = 'Game Over! Try Again!';
+        startButton.disabled = false;
+        return;
+      }
+
+      if (playerSequence.length === sequence.length) {
+        setTimeout(() => nextRound(), 1000);
+      }
+    };
+
+    // Event listeners for tiles
+    tiles.forEach((tile, index) => {
+      tile.addEventListener('click', () => {
+        if (!startButton.disabled) return; // Disable input if game hasn't started
+        flashTile(tile);
+        checkInput(index + 1);
+      });
+    });
+
+    // Start button
+    startButton.addEventListener('click', () => {
+      sequence = [];
+      playerSequence = [];
+      level = 0;
+      startButton.disabled = true;
+      nextRound();
+    });
+  </script>
+</body>
+</html>

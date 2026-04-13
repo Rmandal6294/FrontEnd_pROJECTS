@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Matching Game</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1c1c40;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Title Bar */
+    nav {
+      background-color: #6ddcf2;
+      width: 100%;
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0 15px;
+    }
+
+    nav a:hover {
+      color: #c2df18;
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 80px; /* Adjusted for nav bar */
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      color: #007bff;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    #target-color {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+
+    /* Options (Color Boxes) */
+    #options {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .color-box {
+      width: 100px;
+      height: 100px;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+      margin: 10px;
+    }
+
+    .color-box:hover {
+      transform: scale(1.1);
+    }
+
+    /* Score and Restart Button */
+    #score {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    #restart-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #restart-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #options {
+        justify-content: center;
+      }
+
+      .color-box {
+        width: 80px;
+        height: 80px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      #target-color {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #options {
+        flex-direction: column;
+      }
+
+      .color-box {
+        width: 70px;
+        height: 70px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      #target-color {
+        font-size: 18px;
+      }
+
+      #score, #restart-btn {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <h1>Color Matching Game</h1>
+    <p>Match the color shown below with one of the boxes!</p>
+    <div id="target-color"></div>
+    <div id="options"></div>
+    <div id="score">Score: 0</div>
+    <button id="restart-btn">Restart Game</button>
+  </main>
+
+  <!-- Script for Game Logic -->
+  <script>
+    const targetColorDiv = document.getElementById("target-color");
+    const optionsDiv = document.getElementById("options");
+    const scoreDiv = document.getElementById("score");
+    const restartButton = document.getElementById("restart-btn");
+
+    let score = 0;
+    let gameSpeed = 2000;
+    let gameInterval;
+
+    function getRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function startGame() {
+      score = 0;
+      gameSpeed = 2000;
+      updateScore();
+      restartButton.style.display = "none";
+      generateRound();
+      gameInterval = setInterval(generateRound, gameSpeed);
+    }
+
+    function generateRound() {
+      optionsDiv.innerHTML = "";
+
+      // Generate target color
+      const targetColor = getRandomColor();
+      targetColorDiv.textContent = `Match this color: ${targetColor}`;
+      targetColorDiv.style.color = targetColor;
+
+      // Generate color options
+      const correctIndex = Math.floor(Math.random() * 4);
+
+      for (let i = 0; i < 4; i++) {
+        const colorBox = document.createElement("div");
+        colorBox.classList.add("color-box");
+        const color = i === correctIndex ? targetColor : getRandomColor();
+        colorBox.style.backgroundColor = color;
+        colorBox.addEventListener("click", () => checkAnswer(i === correctIndex));
+        optionsDiv.appendChild(colorBox);
+      }
+    }
+
+    function checkAnswer(isCorrect) {
+      if (isCorrect) {
+        score++;
+        gameSpeed = Math.max(500, gameSpeed - 100); // Increase difficulty
+        updateScore();
+
+        clearInterval(gameInterval);
+        generateRound();
+        gameInterval = setInterval(generateRound, gameSpeed);
+      } else {
+        endGame();
+      }
+    }
+
+    function updateScore() {
+      scoreDiv.textContent = `Score: ${score}`;
+    }
+
+    function endGame() {
+      clearInterval(gameInterval);
+      targetColorDiv.textContent = "Game Over!";
+      optionsDiv.innerHTML = "";
+      restartButton.style.display = "block";
+    }
+
+    restartButton.addEventListener("click", startGame);
+
+    // Start the game initially
+    startGame();
+  </script>
+</body>
+</html>

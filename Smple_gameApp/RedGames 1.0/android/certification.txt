@@ -1,0 +1,24 @@
+---------------------------------------------------
+Here are the ownership and the certification details
+of the RedGames 1.0
+---------------------------------------------------
+
+app_name - 						RedGames
+app_alias - 					redgames
+app_author_name - 				My Company
+app_author_organizational - 	My Company
+app_author_organization - 		My Company
+app_author_locality - 			My Company
+app_author_state - 				West Bengal
+app_author_country - 			India
+app_password - 					xFIQs4L9qBVA
+app_versionName - 				versionName "1.0"
+app_versionCode - 				100
+
+---------------------------------------------------
+The certification was created by WebIntoApp.com at
+the Wednesday 18th of December 2024 03:43:14 PM
+
+https://www.webintoapp.com
+---------------------------------------------------
+

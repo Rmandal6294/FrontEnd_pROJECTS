@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - My Games</title>
+    <link rel="icon" href="LOGO.png" type="image/png">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e2f;
+            color: #fff;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        /* Title Bar */
+        header {
+            background-color: #1c1c3c;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            color: #ff6347;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        nav{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        nav a {
+            color: #b0b0b5;
+            margin: 20px;
+            font-size: 1em;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0px;
+            justify-content: space-around;
+        }
+
+        nav a:hover {
+            color: #ff6347;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            padding: 100px 20px 20px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 100px;
+        }
+
+        .contact-container h1 {
+            font-size: 2.5em;
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        .contact-container p {
+            font-size: 1.2em;
+            color: #b0b0b5;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background-color: #282a36;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            margin-top: 40px;
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #33344d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #e5533f;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #282a36;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 0%;
+        }
+
+        footer p {
+            color: #b0b0b5;
+            font-size: 1em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header with Logo, Company Name, and Navigation -->
+    <header>
+        <div class="logo">RANIT'S GAMES</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Contact Section -->
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions or suggestions, feel free to reach out to us using the form below. We'd love to hear from you!</p>
+
+        <div class="contact-form">
+            <form action="mailto:ranitmandal6294@gmail.com" method="POST" enctype="multipart/form-data">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" required placeholder="Enter your message"></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer with Copyright -->
+    <footer>
+        <p>&copy; 2024 RANIT'S GAMES || All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

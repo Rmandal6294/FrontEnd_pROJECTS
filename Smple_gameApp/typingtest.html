@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <title>Cyber Typing Speed Test</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #00FF00;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    header {
+      background: #222;
+      padding: 20px;
+      border-bottom: 2px solid #00FF00;
+      box-shadow: 0 0 10px 2px #00FF00;
+    }
+
+    h1 {
+      color: #00FF00;
+      text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    #title-bar {
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #00FF00;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    #title-bar a {
+      color: #00FF00;
+      text-decoration: none;
+    }
+
+    #game-area {
+      margin-top: 50px;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 2px #00FF00;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #sentence-display {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #FFFF00;
+      text-shadow: 0 0 5px #FFFF00;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    #user-input {
+      width: 90%;
+      height: 100px;
+      font-size: 1.2rem;
+      padding: 10px;
+      color: #00FF00;
+      background: #222;
+      border: 1px solid #00FF00;
+      border-radius: 10px;
+      margin-top: 10px;
+      resize: none;
+      white-space: pre-wrap;
+    }
+
+    #user-input:focus {
+      outline: none;
+      border-color: #FF5733;
+    }
+
+    #timer, #wpm {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #FF5733;
+    }
+
+    button {
+      background-color: #FF5733;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    button:hover {
+      background-color: #FF6347;
+    }
+
+    footer {
+      background-color: #222;
+      color: #00FF00;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.9rem;
+    }
+
+    #history-section {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      background: #333;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 2px #00FF00;
+      color: #00FF00;
+      margin-top: 30px;
+    }
+
+    #history-section h2 {
+      color: #FF5733;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    #history-display {
+      font-size: 1rem;
+      margin-top: 20px;
+      color: #FFFF00;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      #game-area {
+        padding: 15px;
+      }
+
+      #sentence-display {
+        font-size: 1.2rem;
+      }
+
+      #user-input {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 1rem;
+      }
+
+      #timer, #wpm {
+        font-size: 1rem;
+      }
+
+      footer {
+        font-size: 0.8rem;
+      }
+
+      #title-bar {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      #game-area {
+        width: 90%;
+        padding: 10px;
+      }
+
+      #sentence-display {
+        font-size: 1rem;
+      }
+
+      #user-input {
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      button {
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      #timer, #wpm {
+        font-size: 1rem;
+      }
+
+      footer {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cyber Typing Speed Test</h1>
+    <div id="title-bar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="game-area">
+      <div id="sentence-display"></div>
+      <textarea id="user-input" placeholder="Start typing here..." autofocus></textarea>
+      <div id="timer">Time: 0s</div>
+      <div id="wpm">WPM: 0</div>
+      <button id="restart-button" onclick="restartGame()">Restart</button>
+    </section>
+
+    <!-- History Section -->
+    <section id="history-section">
+      <h2>Typing History</h2>
+      <div id="history-display"></div>
+    </section>
+  </main>
+
+  <script>
+    let selectedSentence = '';
+    let startTime;
+    let timerInterval;
+    let isGameRunning = false;
+    let resultsHistory = JSON.parse(localStorage.getItem("typingHistory")) || [];
+
+    async function fetchParagraph() {
+      try {
+        const response = await fetch("https://baconipsum.com/api/?type=all-meat&paras=1&start-with-lorem=1");
+        const data = await response.json();
+        selectedSentence = data[0];
+        document.getElementById('sentence-display').textContent = selectedSentence;
+      } catch (error) {
+        console.error("Error fetching paragraph: ", error);
+        selectedSentence = "Error fetching content, try again!";
+        document.getElementById('sentence-display').textContent = selectedSentence;
+      }
+    }
+
+    function restartGame() {
+      isGameRunning = false;
+      document.getElementById('user-input').value = '';
+      document.getElementById('user-input').disabled = false;
+      document.getElementById('restart-button').style.display = 'none';
+      document.getElementById('wpm').textContent = 'WPM: 0';
+      document.getElementById('timer').textContent = 'Time: 0s';
+      startGame();
+    }
+
+    function startGame() {
+      fetchParagraph();
+      document.getElementById('user-input').value = '';
+      document.getElementById('user-input').focus();
+      
+      startTime = Date.now();
+
+      if (!isGameRunning) {
+        isGameRunning = true;
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+    }
+
+    function updateTimer() {
+      const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('timer').textContent = `Time: ${timeElapsed}s`;
+
+      const wpm = calculateWPM(timeElapsed);
+      document.getElementById('wpm').textContent = `WPM: ${wpm}`;
+    }
+
+    function calculateWPM(timeElapsed) {
+      const wordsTyped = document.getElementById('user-input').value.trim().split(/\s+/).length;
+      return Math.floor((wordsTyped / timeElapsed) * 60);
+    }
+
+    function updateHistoryDisplay() {
+      const historyDisplay = document.getElementById('history-display');
+      historyDisplay.innerHTML = resultsHistory.map(item => `<div>${item.date} - ${item.wpm} WPM</div>`).join('');
+    }
+
+    document.getElementById('user-input').addEventListener('input', function() {
+      const inputText = document.getElementById('user-input').value;
+
+      // Highlight incorrect text
+      const sentenceDisplay = document.getElementById('sentence-display');
+      let correctPart = '';
+      let incorrectPart = '';
+
+      for (let i = 0; i < inputText.length; i++) {
+        if (inputText[i] === selectedSentence[i]) {
+          correctPart += inputText[i];
+        } else {
+          incorrectPart += inputText[i];
+        }
+      }
+
+      sentenceDisplay.innerHTML = `
+        <span style="color: #00FF00;">${correctPart}</span>
+        <span style="color: #FF5733;">${incorrectPart}</span>
+        ${selectedSentence.substring(inputText.length)}
+      `;
+
+      if (inputText.trim() === selectedSentence) {
+        clearInterval(timerInterval);
+        document.getElementById('user-input').disabled = true;
+        document.getElementById('restart-button').style.display = 'block';
+        
+        const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+        const wpm = calculateWPM(timeElapsed);
+
+        const historyItem = {
+          date: new Date().toLocaleString(),
+          wpm: wpm
+        };
+
+        resultsHistory.push(historyItem);
+        localStorage.setItem("typingHistory", JSON.stringify(resultsHistory)); 
+        updateHistoryDisplay();
+      }
+    });
+
+    startGame();
+  </script>
+</body>
+</html>

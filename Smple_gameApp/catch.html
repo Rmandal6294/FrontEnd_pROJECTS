@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="LOGO.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #1a1a2e, #16213e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: space-between;
+    }
+
+    nav {
+      background: #0f3460;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #00d4ff;
+    }
+
+    header {
+      text-align: center;
+      margin: 20px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #00d4ff;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #a4acc4;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 20px;
+    }
+
+    canvas {
+      background: #0f3460;
+      border: 3px solid #00d4ff;
+      box-shadow: 0 4px 8px rgba(0, 212, 255, 0.5);
+      margin-top: 20px;
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      display: block;
+    }
+
+    #score {
+      font-size: 1.5rem;
+      color: #00d4ff;
+      margin-top: 20px;
+    }
+
+    #game-over {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff4f4f;
+      visibility: hidden;
+      margin-top: 10px;
+    }
+
+    button {
+      background: #00d4ff;
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00b3cc;
+    }
+
+    footer {
+      background: #0f3460;
+      color: #a4acc4;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1rem;
+      }
+
+      canvas {
+        height: 300px;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 8px 16px;
+      }
+
+      #score {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      canvas {
+        height: 250px;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#" class="logo">Catch Game</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Catch the Falling Objects</h1>
+    <p>Use the arrow keys to catch as many objects as you can!</p>
+  </header>
+
+  <!-- Main Game Section -->
+  <main>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="score">Score: 0</div>
+    <div id="game-over">Game Over!</div>
+    <button onclick="resetGame()">Restart Game</button>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let score = 0;
+    let gameOver = false;
+
+    // Basket
+    const basket = {
+      width: 100,
+      height: 20,
+      x: canvas.width / 2 - 50,
+      speed: 10,
+    };
+
+    // Falling Objects
+    const objects = [];
+    const objectSpeedRange = [2, 6];
+
+    // Player controls
+    let leftPressed = false;
+    let rightPressed = false;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') leftPressed = true;
+      if (e.key === 'ArrowRight') rightPressed = true;
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft') leftPressed = false;
+      if (e.key === 'ArrowRight') rightPressed = false;
+    });
+
+    function createFallingObject() {
+      const object = {
+        x: Math.random() * (canvas.width - 30),
+        y: 0,
+        width: 30 + Math.random() * 20,
+        height: 30 + Math.random() * 20,
+        speed: objectSpeedRange[0] + Math.random() * (objectSpeedRange[1] - objectSpeedRange[0]),
+        color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+      };
+      objects.push(object);
+    }
+
+    function updateGame() {
+      if (gameOver) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (leftPressed && basket.x > 0) basket.x -= basket.speed;
+      if (rightPressed && basket.x + basket.width < canvas.width) basket.x += basket.speed;
+
+      ctx.fillStyle = '#00d4ff';
+      ctx.fillRect(basket.x, canvas.height - basket.height, basket.width, basket.height);
+
+      for (let i = 0; i < objects.length; i++) {
+        const object = objects[i];
+        object.y += object.speed;
+
+        if (
+          object.y + object.height >= canvas.height - basket.height &&
+          object.x + object.width > basket.x && object.x < basket.x + basket.width
+        ) {
+          score++;
+          objects.splice(i, 1);
+          i--;
+        }
+
+        ctx.fillStyle = object.color;
+        ctx.fillRect(object.x, object.y, object.width, object.height);
+
+        if (object.y + object.height > canvas.height) {
+          gameOver = true;
+          document.getElementById('game-over').style.visibility = 'visible';
+        }
+      }
+
+      document.getElementById('score').textContent = `Score: ${score}`;
+
+      if (!gameOver) requestAnimationFrame(updateGame);
+    }
+
+    function startGame() {
+      setInterval(createFallingObject, 1000);
+      updateGame();
+    }
+
+    function resetGame() {
+      score = 0;
+      gameOver = false;
+      document.getElementById('game-over').style.visibility = 'hidden';
+      objects.length = 0;
+      startGame();
+    }
+
+    startGame();
+  </script>
+</body>
+</html>
